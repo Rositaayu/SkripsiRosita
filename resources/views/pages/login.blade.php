@@ -17,9 +17,8 @@
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-danger">
-        <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="#"><b><span class="text-danger bg-white py-1 px-2">TIMES</span>
-                INDONESIA</a></b>
+    <!-- Navbar Brand-->
+    <img src="{{ asset('src/assets/img/logo times.png') }}" alt="logo" style="max-height: 70% !important;">           
     </nav>
 
     <div id="layoutAuthentication">
@@ -29,8 +28,8 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-5">
                             <div class="card border-0 mt-4">
-                                <img src="{{ asset('src/assets/img/logo.png') }}" alt="logo"
-                                    style="max-height: 100% !important;">
+                            <img src="{{ asset('src/assets/img/logo.png') }}" alt="logo" 
+                                style="max-height: 100% !important;">   
                             </div>
                         </div>
                         <div class="col-lg-5">
@@ -99,7 +98,7 @@
                     <div class="text-center">
                         <div class="text-white">Copyright &copy; 2023 TIMES Media.</div>
                         <div>
-                            <a class="text-white text-decoration-none" href="#">All right reserved.</a>
+                            <a class="text-white text-decoration-none" href="#">All rights reserved.</a>
                         </div>
                     </div>
                 </div>

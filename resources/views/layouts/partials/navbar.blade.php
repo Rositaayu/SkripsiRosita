@@ -1,6 +1,6 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-danger">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="#"><b><span class="text-danger bg-white py-1 px-2">TIMES</span> INDONESIA</a></b>
+    <img src="{{ asset('src/assets/img/logo times.png') }}" alt="logo" style="max-height: 70% !important;">               
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fas fa-bars"></i></button>
