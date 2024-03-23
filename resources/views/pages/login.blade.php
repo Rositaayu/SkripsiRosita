@@ -17,8 +17,8 @@
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-danger">
-    <!-- Navbar Brand-->
-    <img src="{{ asset('src/assets/img/logo times.png') }}" alt="logo" style="max-height: 70% !important;">           
+        <!-- Navbar Brand-->
+        <img src="{{ asset('src/assets/img/logo times.png') }}" alt="logo" style="max-height: 70% !important;">
     </nav>
 
     <div id="layoutAuthentication">
@@ -27,9 +27,9 @@
                 <div class="container mt-5 mb-3">
                     <div class="row justify-content-center">
                         <div class="col-lg-5">
-                            <div class="card border-0 mt-4">
-                            <img src="{{ asset('src/assets/img/logo.png') }}" alt="logo" 
-                                style="max-height: 100% !important;">   
+                            <div class="card border-0 mt-4 ml-2">
+                                <img src="{{ asset('src/assets/img/logo.png') }}" alt="logo"
+                                    style="max-height: 100% !important;">
                             </div>
                         </div>
                         <div class="col-lg-5">
@@ -96,7 +96,7 @@
             <footer class="py-4 bg-danger mt-auto">
                 <div class="container-fluid px-4">
                     <div class="text-center">
-                        <div class="text-white">Copyright &copy; 2023 TIMES Media.</div>
+                        <div class="text-white">Copyright &copy; 2024 TIMES Media.</div>
                         <div>
                             <a class="text-white text-decoration-none" href="#">All rights reserved.</a>
                         </div>
