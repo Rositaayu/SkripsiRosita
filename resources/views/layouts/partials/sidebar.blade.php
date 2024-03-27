@@ -17,14 +17,13 @@
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="{{ route('super-editor') }}">Super Editor</a>
                         <a class="nav-link" href="{{ route('editor') }}">Editor</a>
-                        <a class="nav-link" href="#">Wartawan</a>
+                        <a class="nav-link" href="{{ route('wartawan') }}">Wartawan</a>
                     </nav>
                 </div>
 
                 <hr>
 
-                <a class="nav-link" href="#" onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();">
+                <a class="nav-link btn-logout" href="#">
                     <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
                     Logout
                 </a>

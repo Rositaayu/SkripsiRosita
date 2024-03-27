@@ -77,7 +77,8 @@ class UserSeeder extends Seeder
 
         $wartawan = [
             [
-                'id_user' => 3,
+                'id_user' => 4,
+                'id_editor' => 1,
                 'nama' => 'Wartawan',
                 'email' => 'wartawan@email.com',
                 'password' => bcrypt('wartawan')

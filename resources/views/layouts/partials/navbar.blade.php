@@ -1,6 +1,6 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-danger">
     <!-- Navbar Brand-->
-    <img src="{{ asset('src/assets/img/logo times.png') }}" alt="logo" style="max-height: 70% !important;">               
+    <img src="{{ asset('src/assets/img/logo times.png') }}" alt="logo" style="max-height: 70% !important;">
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fas fa-bars"></i></button>
@@ -24,12 +24,12 @@
                     <hr class="dropdown-divider" />
                 </li>
                 <li>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="dropdown-item">Logout</button>
-                    </form>
+                    <a href="#" class="dropdown-item btn-logout">Logout</a>
                 </li>
             </ul>
         </li>
     </ul>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
 </nav>

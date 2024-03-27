@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('wartawan', function (Blueprint $table) {
             $table->id('id_wartawan');
             $table->unsignedBigInteger('id_user')->index();
+            $table->unsignedBigInteger('id_editor')->index();
             $table->string('nama');
             $table->string('email')->unique();
             $table->string('password');
             $table->foreign('id_user')->references('id_user')->on('user');
+            $table->foreign('id_editor')->references('id_editor')->on('editor');
             $table->timestamps();
         });
     }

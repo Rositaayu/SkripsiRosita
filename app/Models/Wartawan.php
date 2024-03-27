@@ -18,4 +18,9 @@ class Wartawan extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+
+    public function editor(): BelongsTo
+    {
+        return $this->belongsTo(Editor::class, 'id_editor');
+    }
 }

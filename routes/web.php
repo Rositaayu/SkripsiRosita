@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\SuperEditorController;
 use App\Http\Controllers\EditorController;
+use App\Http\Controllers\WartawanController;
+use App\Http\Controllers\SuperEditorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,3 +42,10 @@ Route::get('/editor/create', [EditorController::class, 'create'])->name('editor.
 Route::post('/editor', [EditorController::class, 'store'])->name('editor.store')->middleware('auth');
 Route::get('/editor/{id}/edit', [EditorController::class, 'edit'])->name('editor.edit')->middleware('auth');
 Route::put('/editor/{id}', [EditorController::class, 'update'])->name('editor.update')->middleware('auth');
+
+// Wartawan
+Route::get('/wartawan', [WartawanController::class, 'index'])->name('wartawan')->middleware('auth');
+Route::get('/wartawan/create', [WartawanController::class, 'create'])->name('wartawan.create')->middleware('auth');
+Route::post('/wartawan', [WartawanController::class, 'store'])->name('wartawan.store')->middleware('auth');
+Route::get('/wartawan/{id}/edit', [WartawanController::class, 'edit'])->name('wartawan.edit')->middleware('auth');
+Route::put('/wartawan/{id}', [WartawanController::class, 'update'])->name('wartawan.update')->middleware('auth');
