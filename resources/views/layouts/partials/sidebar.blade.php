@@ -20,6 +20,14 @@
                         <a class="nav-link" href="{{ route('wartawan') }}">Wartawan</a>
                     </nav>
                 </div>
+                <a class="nav-link" href="{{ route('berita') }}">
+                    <div class="sb-nav-link-icon"><i class="far fa-file-alt"></i></div>
+                    News List
+                </a>
+                <a class="nav-link" href="{{ route('berita.create') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
+                    Add News
+                </a>
 
                 <hr>
 

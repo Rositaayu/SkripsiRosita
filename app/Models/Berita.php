@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Berita extends Model
 {
@@ -22,5 +23,10 @@ class Berita extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function tag_berita(): HasMany
+    {
+        return $this->hasMany(TagBerita::class, 'id_tag');
     }
 }

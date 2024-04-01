@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\EditorController;
 use App\Http\Controllers\WartawanController;
 use App\Http\Controllers\SuperEditorController;
@@ -49,3 +50,10 @@ Route::get('/wartawan/create', [WartawanController::class, 'create'])->name('war
 Route::post('/wartawan', [WartawanController::class, 'store'])->name('wartawan.store')->middleware('auth');
 Route::get('/wartawan/{id}/edit', [WartawanController::class, 'edit'])->name('wartawan.edit')->middleware('auth');
 Route::put('/wartawan/{id}', [WartawanController::class, 'update'])->name('wartawan.update')->middleware('auth');
+
+// Berita
+Route::get('/berita', [BeritaController::class, 'index'])->name('berita')->middleware('auth');
+Route::get('/berita/create', [BeritaController::class, 'create'])->name('berita.create')->middleware('auth');
+Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store')->middleware('auth');
+Route::get('/berita/{id}/edit', [BeritaController::class, 'edit'])->name('berita.edit')->middleware('auth');
+Route::put('/berita/{id}', [BeritaController::class, 'update'])->name('berita.update')->middleware('auth');

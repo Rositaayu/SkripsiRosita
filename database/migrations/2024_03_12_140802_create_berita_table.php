@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('judul_berita');
             $table->string('foto_berita');
             $table->string('caption_foto');
-            $table->string('tag_berita');
             $table->text('artikel_berita');
             $table->enum('status_berita', [0, 1, 2]);
             $table->foreign('id_kategori_berita')->references('id_kategori_berita')->on('kategori_berita');
