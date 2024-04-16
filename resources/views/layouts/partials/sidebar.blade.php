@@ -6,6 +6,8 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
+
+                @can('admin')
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
                     aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
@@ -20,6 +22,8 @@
                         <a class="nav-link" href="{{ route('wartawan') }}">Wartawan</a>
                     </nav>
                 </div>
+                @endcan
+
                 <a class="nav-link" href="{{ route('berita') }}">
                     <div class="sb-nav-link-icon"><i class="far fa-file-alt"></i></div>
                     News List
@@ -27,6 +31,14 @@
                 <a class="nav-link" href="{{ route('berita.create') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                     Add News
+                </a>
+                <a class="nav-link" href="{{ route('profile.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-edit"></i></div>
+                    Edit Profile
+                </a>
+                <a class="nav-link" href="{{ route('profile.password') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-unlock-alt"></i></div>
+                    Change Password
                 </a>
 
                 <hr>

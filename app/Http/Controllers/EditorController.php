@@ -53,9 +53,6 @@ class EditorController extends Controller
 
         Editor::create([
             'id_user' => $user->id_user,
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
         ]);
@@ -86,9 +83,6 @@ class EditorController extends Controller
 
         $data = Editor::findOrFail($id);
         $data->update([
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => $request->password ? bcrypt($request->password) : $data->password,
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
         ]);

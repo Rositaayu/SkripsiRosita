@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('editor', function (Blueprint $table) {
             $table->id('id_editor');
             $table->unsignedBigInteger('id_user')->index();
-            $table->string('nama');
-            $table->string('email')->unique();
-            $table->string('password');
             $table->string('alamat');
             $table->string('no_hp')->unique();
             $table->foreign('id_user')->references('id_user')->on('user');

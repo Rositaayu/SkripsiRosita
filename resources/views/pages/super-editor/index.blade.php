@@ -82,12 +82,12 @@
             {
                 targets: 1,
                 className: 'align-middle',
-                data: 'nama',
+                data: 'user.name',
             },
             {
                 targets: 2,
                 className: 'align-middle',
-                data: 'email',
+                data: 'user.email',
             },
             {
                 targets: 3,

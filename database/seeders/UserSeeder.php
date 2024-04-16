@@ -55,8 +55,6 @@ class UserSeeder extends Seeder
         $admin = [
             [
                 'id_user' => 1,
-                'email' => 'admin@email.com',
-                'password' => bcrypt('admin'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
@@ -65,9 +63,6 @@ class UserSeeder extends Seeder
         $super_editor = [
             [
                 'id_user' => 2,
-                'nama' => 'Super Editor',
-                'email' => 'supereditor@email.com',
-                'password' => bcrypt('supereditor'),
                 'alamat' => 'Jl. Super Editor No. 1',
                 'no_hp' => '081234567890',
                 'jabatan' => 'Super Editor',
@@ -79,9 +74,6 @@ class UserSeeder extends Seeder
         $editor = [
             [
                 'id_user' => 3,
-                'nama' => 'Editor',
-                'email' => 'editor@email.com',
-                'password' => bcrypt('editor'),
                 'alamat' => 'Jl. Editor No. 1',
                 'no_hp' => '081234567891',
                 'created_at' => now(),
@@ -93,9 +85,6 @@ class UserSeeder extends Seeder
             [
                 'id_user' => 4,
                 'id_editor' => 1,
-                'nama' => 'Wartawan',
-                'email' => 'wartawan@email.com',
-                'password' => bcrypt('wartawan'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

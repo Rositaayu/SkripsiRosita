@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('foto_berita');
             $table->string('caption_foto');
             $table->text('artikel_berita');
-            $table->enum('status_berita', [0, 1, 2]);
+            $table->tinyInteger('status_berita')->default(0)->comment('0 = Review, 1 = Pending, 2 = On Progress, 3 = Published');
             $table->foreign('id_kategori_berita')->references('id_kategori_berita')->on('kategori_berita');
             $table->foreign('id_user')->references('id_user')->on('user');
             $table->timestamps();

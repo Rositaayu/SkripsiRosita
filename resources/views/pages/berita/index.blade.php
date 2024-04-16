@@ -29,9 +29,13 @@
                             <th>Kategori</th>
                             <th>Judul</th>
                             <th>Penulis</th>
+                            <th>Editor</th>
                             <th>Tanggal</th>
                             <th>Status</th>
+
+                            @if (auth()->user()->role == 'super_editor' || auth()->user()->role == 'editor')
                             <th>Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tfoot>
@@ -40,9 +44,13 @@
                             <th>Kategori</th>
                             <th>Judul</th>
                             <th>Penulis</th>
+                            <th>Editor</th>
                             <th>Tanggal</th>
                             <th>Status</th>
+
+                            @if (auth()->user()->role == 'super_editor' || auth()->user()->role == 'editor')
                             <th>Aksi</th>
+                            @endif
                         </tr>
                     </tfoot>
                     <tbody>
@@ -89,10 +97,18 @@
             {
                 targets: 3,
                 className: 'align-middle',
-                data: 'user.wartawan.nama',
+                data: 'user.name',
             },
             {
                 targets: 4,
+                className: 'align-middle',
+                data: 'user.wartawan.editor.user.name',
+                render: function(data, type, row, meta) {
+                    return row.user.wartawan != null ? data : '-';
+                }
+            },
+            {
+                targets: 5,
                 className: 'align-middle',
                 data: 'created_at',
                 render: function(data, type, row, meta) {
@@ -108,20 +124,29 @@
                 }
             },
             {
-                targets: 5,
+                targets: 6,
                 className: 'align-middle',
-                data: 'user.is_active',
+                data: 'status_berita',
                 render: function(data, type, row, meta) {
-                    return data == 0 ? '<span class="badge bg-danger">0</span>' : data == 1 ? '<span class="badge bg-success">1</span>' : '<span class="badge bg-warning">2</span>';
+                    return data == 0 ? '<span class="badge bg-warning">Review</span>' : data == 1 ? '<span class="badge bg-secondary">Pending</span>' : data == 2 ? '<span class="badge bg-danger">On Progress</span>' : '<span class="badge bg-success">Published</span>';
                 }
             },
             {
-                targets: 6,
+                targets: 7,
                 className: 'align-middle text-center',
                 data: 'id_berita',
                 render: function(data, type, row, meta) {
-                    return `
-                    <button type="button" disabled class="btn btn-warning btn-edit btn-sm"><i class="fas fa-edit"></i></button>`;
+                    return ''
+                    @can('super_editor')
+                    + ` <button type="button" class="btn btn-warning btn-edit btn-sm"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-info btn-show btn-sm"><i class="fas fa-eye"></i></button>
+                    `
+                    @endcan
+                    
+                    @can('editor')
+                    + row.user.wartawan.id_editor == @json(auth()->user()->editor->id_editor) ? ` <button type="button" class="me-1 btn btn-warning btn-edit btn-sm"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-info btn-show btn-sm"><i class="fas fa-eye"></i></button>` : `<button type="button" class="btn btn-info btn-show btn-sm"><i class="fas fa-eye"></i></button>`;
+                    @endcan
                 }
             },
         ],
@@ -133,6 +158,17 @@
         var data = table.row($(this).parents('tr')).data();
 
         var path = "{{ route('berita.edit', ':id') }}";
+        var link = path.replace(':id', data.id_berita);
+
+        location.href = link;
+    });
+
+    // Show
+    $('#news-table tbody').on('click', '.btn-show', function(event) {
+        event.preventDefault();
+        var data = table.row($(this).parents('tr')).data();
+
+        var path = "{{ route('berita.show', ':id') }}";
         var link = path.replace(':id', data.id_berita);
 
         location.href = link;

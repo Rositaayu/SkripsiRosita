@@ -13,7 +13,7 @@ class WartawanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Wartawan::with('user', 'editor')->latest()->get();
+            $data = Wartawan::with('user', 'editor.user')->latest()->get();
 
             return response()->json([
                 'status' => 'success',
@@ -57,9 +57,6 @@ class WartawanController extends Controller
         Wartawan::create([
             'id_user' => $user->id_user,
             'id_editor' => $request->id_editor,
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
         ]);
 
         return redirect()->route('wartawan')->with('success', 'Wartawan created successfully.');
@@ -88,9 +85,6 @@ class WartawanController extends Controller
 
         $data = Wartawan::findOrFail($id);
         $data->update([
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => $request->password ? bcrypt($request->password) : $data->password,
             'id_editor' => $request->id_editor,
         ]);
 

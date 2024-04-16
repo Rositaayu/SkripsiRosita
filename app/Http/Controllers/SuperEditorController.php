@@ -54,9 +54,6 @@ class SuperEditorController extends Controller
 
         SuperEditor::create([
             'id_user' => $user->id_user,
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
             'jabatan' => $request->jabatan
@@ -89,9 +86,6 @@ class SuperEditorController extends Controller
 
         $data = SuperEditor::findOrFail($id);
         $data->update([
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => $request->password ? bcrypt($request->password) : $data->password,
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
             'jabatan' => $request->jabatan
