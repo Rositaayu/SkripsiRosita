@@ -32,10 +32,7 @@
                             <th>Editor</th>
                             <th>Tanggal</th>
                             <th>Status</th>
-
-                            @if (auth()->user()->role == 'super_editor' || auth()->user()->role == 'editor')
                             <th>Aksi</th>
-                            @endif
                         </tr>
                     </thead>
                     <tfoot>
@@ -47,10 +44,7 @@
                             <th>Editor</th>
                             <th>Tanggal</th>
                             <th>Status</th>
-
-                            @if (auth()->user()->role == 'super_editor' || auth()->user()->role == 'editor')
                             <th>Aksi</th>
-                            @endif
                         </tr>
                     </tfoot>
                     <tbody>
@@ -138,14 +132,21 @@
                 render: function(data, type, row, meta) {
                     return ''
                     @can('super_editor')
-                    + ` <button type="button" class="btn btn-warning btn-edit btn-sm"><i class="fas fa-edit"></i></button>
+                    + `<button type="button" class="btn btn-warning btn-edit btn-sm"><i class="fas fa-edit"></i></button>
                     <button type="button" class="btn btn-info btn-show btn-sm"><i class="fas fa-eye"></i></button>
-                    `
+                    ${row.status_berita == 1 ? `<button type="button" class="btn btn-secondary btn-comment btn-sm"><i class="fas fa-comments"></i></button>` : ''}`;
                     @endcan
                     
                     @can('editor')
                     + row.user.wartawan.id_editor == @json(auth()->user()->editor->id_editor) ? ` <button type="button" class="me-1 btn btn-warning btn-edit btn-sm"><i class="fas fa-edit"></i></button>
-                    <button type="button" class="btn btn-info btn-show btn-sm"><i class="fas fa-eye"></i></button>` : `<button type="button" class="btn btn-info btn-show btn-sm"><i class="fas fa-eye"></i></button>`;
+                    <button type="button" class="btn btn-info btn-show btn-sm"><i class="fas fa-eye"></i></button> ${row.status_berita == 1 ? `<button type="button" class="btn btn-secondary btn-comment btn-sm"><i class="fas fa-comments"></i></button>` : ''}` : `<button type="button" class="btn btn-info btn-show btn-sm"><i class="fas fa-eye"></i></button>`;
+                    @endcan
+
+                    @can('wartawan')
+                    + `<button type="button" class="btn btn-info btn-show btn-sm"><i class="fas fa-eye text-white"></i></button>
+                    ${row.status_berita == 1 ? `<button type="button" class="btn btn-warning btn-edit btn-sm"><i class="fas fa-edit"></i></button>` : ''}
+                    ${row.komentar.length != 0 ? `<button type="button" class="btn btn-secondary btn-comment btn-sm"><i class="fas fa-comments"></i></button>` : ''}
+                    `;
                     @endcan
                 }
             },
@@ -158,6 +159,17 @@
         var data = table.row($(this).parents('tr')).data();
 
         var path = "{{ route('berita.edit', ':id') }}";
+        var link = path.replace(':id', data.id_berita);
+
+        location.href = link;
+    });
+    
+    // comment
+    $('#news-table tbody').on('click', '.btn-comment', function(event) {
+        event.preventDefault();
+        var data = table.row($(this).parents('tr')).data();
+
+        var path = "{{ route('berita.comment', ':id') }}";
         var link = path.replace(':id', data.id_berita);
 
         location.href = link;

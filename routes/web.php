@@ -71,3 +71,5 @@ Route::get('/berita/{id}', [BeritaController::class, 'show'])->name('berita.show
 Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store')->middleware('auth');
 Route::get('/berita/{id}/edit', [BeritaController::class, 'edit'])->name('berita.edit')->middleware('auth');
 Route::put('/berita/{id}', [BeritaController::class, 'update'])->name('berita.update')->middleware('auth');
+Route::get('/berita/{id}/comment', [BeritaController::class, 'comment'])->name('berita.comment')->middleware('auth');
+Route::post('/berita/{id}/comment', [BeritaController::class, 'storeComment'])->name('berita.storeComment')->middleware('auth');

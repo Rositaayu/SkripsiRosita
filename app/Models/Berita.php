@@ -29,4 +29,9 @@ class Berita extends Model
     {
         return $this->hasMany(TagBerita::class, 'id_tag');
     }
+
+    public function komentar(): HasMany
+    {
+        return $this->hasMany(Komentar::class, 'id_berita');
+    }
 }

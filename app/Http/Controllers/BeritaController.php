@@ -6,6 +6,7 @@ use App\Models\Tag;
 use App\Models\Berita;
 use Illuminate\Http\Request;
 use App\Models\KategoriBerita;
+use App\Models\Komentar;
 use App\Models\TagBerita;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -15,12 +16,12 @@ class BeritaController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Berita::with('kategori', 'user.wartawan.editor.user', 'tag_berita')->latest()->get();
+            $data = Berita::with('kategori', 'user.wartawan.editor.user', 'tag_berita', 'komentar')->latest()->get();
 
             if (auth()->user()->role == 'wartawan') {
-                $data = Berita::with('kategori', 'user.wartawan.editor.user', 'tag_berita')->where('id_user', auth()->user()->id_user)->latest()->get();
+                $data = Berita::with('kategori', 'user.wartawan.editor.user', 'tag_berita', 'komentar')->where('id_user', auth()->user()->id_user)->latest()->get();
             } else if (auth()->user()->role == 'editor') {
-                $data = Berita::with('kategori', 'user.wartawan.editor.user', 'tag_berita')->whereHas('user', function ($query) {
+                $data = Berita::with('kategori', 'user.wartawan.editor.user', 'tag_berita', 'komentar')->whereHas('user', function ($query) {
                     $query->whereHas('wartawan', function ($query) {
                         $query->where('id_editor', auth()->user()->editor->id_editor);
                     });
@@ -172,5 +173,41 @@ class BeritaController extends Controller
         TagBerita::insert($tag);
 
         return redirect()->route('berita')->with('success', 'Berita updated successfully.');
+    }
+
+    public function comment($id)
+    {
+        $berita = Berita::with('tag_berita', 'komentar')->findOrFail($id);
+        $kategori = KategoriBerita::all();
+        $tag = Tag::all();
+        $tagBerita = TagBerita::where('id_berita', $id)->get();
+        $tagBerita = $tagBerita->map(function ($item) {
+            return $item->id_tag;
+        })->toArray();
+        $komentar = Komentar::with('user')->where('id_berita', $id)->get();
+
+        return view('pages.berita.comment', compact('berita', 'kategori', 'tag', 'tagBerita', 'komentar'));
+    }
+
+    public function storeComment(Request $request, $id)
+    {
+        $rules = [
+            'comment' => ['required', 'string'],
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $berita = Berita::findOrFail($id);
+
+        $berita->komentar()->create([
+            'id_user' => auth()->user()->id_user,
+            'komentar' => $request->comment,
+        ]);
+
+        return redirect()->route('berita')->with('success', 'Comment added successfully.');
     }
 }
