@@ -32,7 +32,7 @@ class SuperEditorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:super_editor,email'],
+            'email' => ['required', 'email', 'unique:user,email'],
             'password' => ['required'],
             'alamat' => 'required',
             'no_hp' => ['required', 'unique:super_editor,no_hp', 'numeric', 'digits_between:10,12'],
@@ -71,20 +71,27 @@ class SuperEditorController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
+        $data = SuperEditor::with('user')->findOrFail($id);
+
+        $rules = [
             'nama' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:super_editor,email,' . $id . ',id_super_editor'],
+            'email' => ['required', 'email'],
             'alamat' => 'required',
             'no_hp' => ['required', 'unique:super_editor,no_hp,' . $id . ',id_super_editor', 'numeric', 'digits_between:10,12'],
             'jabatan' => 'required',
             'is_active' => ['required', 'in:0,1'],
-        ]);
+        ];
+
+        if ($request->email != $data->user->email) {
+            $rules['email'] = ['required', 'email', 'unique:user,email,' . $id . ',id_user'];
+        }
+
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $data = SuperEditor::findOrFail($id);
         $data->update([
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
@@ -95,7 +102,7 @@ class SuperEditorController extends Controller
         $user->update([
             'name' => $request->nama,
             'email' => $request->email,
-            'password' => $request->password ? bcrypt($request->password) : $data->password,
+            'password' => $request->password ? bcrypt($request->password) : $data->user->password,
             'is_active' => $request->is_active
         ]);
 

@@ -54,7 +54,7 @@
                         <option selected disabled value="">Pilih Editor</option>
                         @foreach ($editor as $item)
                         <option value="{{ $item->id_editor }}">
-                            {{ $item->nama }}</option>
+                            {{ $item->user->name }}</option>
                         @endforeach
                     </select>
                     @error('id_editor')

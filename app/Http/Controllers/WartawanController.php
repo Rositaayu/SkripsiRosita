@@ -35,7 +35,7 @@ class WartawanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:super_editor,email'],
+            'email' => ['required', 'email', 'unique:user,email'],
             'password' => ['required'],
             'id_editor' => ['required', 'exists:editor,id_editor'],
             'is_active' => ['required', 'in:0,1'],
@@ -72,18 +72,25 @@ class WartawanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
+        $data = Wartawan::with('user')->findOrFail($id);
+
+        $rules = [
             'nama' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:super_editor,email,' . $id . ',id_super_editor'],
+            'email' => ['required', 'email'],
             'id_editor' => ['required', 'exists:editor,id_editor'],
             'is_active' => ['required', 'in:0,1'],
-        ]);
+        ];
+
+        if ($request->email != $data->user->email) {
+            $rules['email'] = ['required', 'email', 'unique:user,email,' . $id . ',id_user'];
+        }
+
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $data = Wartawan::findOrFail($id);
         $data->update([
             'id_editor' => $request->id_editor,
         ]);
@@ -92,7 +99,7 @@ class WartawanController extends Controller
         $user->update([
             'name' => $request->nama,
             'email' => $request->email,
-            'password' => $request->password ? bcrypt($request->password) : $user->password,
+            'password' => $request->password ? bcrypt($request->password) : $data->user->password,
             'is_active' => $request->is_active
         ]);
 

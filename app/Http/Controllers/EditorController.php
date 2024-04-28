@@ -32,7 +32,7 @@ class EditorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:super_editor,email'],
+            'email' => ['required', 'email', 'unique:user,email'],
             'password' => ['required'],
             'alamat' => 'required',
             'no_hp' => ['required', 'unique:super_editor,no_hp', 'numeric', 'digits_between:10,12'],
@@ -69,19 +69,27 @@ class EditorController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
+        $data = Editor::with('user')->findOrFail($id);
+
+        $rules = [
             'nama' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:editor,email,' . $id . ',id_editor'],
+            'email' => ['required', 'email'],
             'alamat' => 'required',
             'no_hp' => ['required', 'unique:editor,no_hp,' . $id . ',id_editor', 'numeric', 'digits_between:10,12'],
             'is_active' => ['required', 'in:0,1'],
-        ]);
+        ];
+
+        if ($request->email != $data->user->email) {
+            $rules['email'] = ['required', 'email', 'unique:user,email,' . $id . ',id_user'];
+        }
+
+        $validator = Validator::make($request->all(), $rules);
+
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $data = Editor::findOrFail($id);
         $data->update([
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
@@ -91,12 +99,10 @@ class EditorController extends Controller
         $user->update([
             'name' => $request->nama,
             'email' => $request->email,
-            'password' => $request->password ? bcrypt($request->password) : $data->password,
+            'password' => $request->password ? bcrypt($request->password) : $data->user->password,
             'is_active' => $request->is_active
         ]);
 
         return redirect()->route('editor')->with('success', 'Editor updated successfully.');
     }
-
-
 }
