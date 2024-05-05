@@ -80,12 +80,14 @@
                     <ul class="list-group">
                         @forelse ($komentar as $item)
                         <li class="list-group list-group-item-primary p-3 mb-3">
+                            Komentar {{ $loop->iteration }}
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <strong>{{ $item->user->name }}</strong>
                                     <p>{{ $item->komentar }}</p>
                                 </div>
                             </div>
+                            {{ $item->created_at }}
                         </li>
                         @empty
                         <li class="list-group list-group-item-primary p-3 mb-3">

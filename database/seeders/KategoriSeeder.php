@@ -50,20 +50,10 @@ class KategoriSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'nama_kategori' => 'Berita Terbaru',
+                'nama_kategori' => 'Kopi Times',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'nama_kategori' => 'Berita Terkini',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_kategori' => 'Berita Terpopuler',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
         ];
 
         KategoriBerita::insert($kategori);

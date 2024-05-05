@@ -15,7 +15,17 @@ class TagSeeder extends Seeder
     {
         $tag = [
             [
-                'nama_tag' => 'Politik',
+                'nama_tag' => 'Peristiwa Daerah',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_tag' => 'Indonesia Positif',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_tag' => 'Peristiwa Nasional',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -25,22 +35,12 @@ class TagSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'nama_tag' => 'Teknologi',
+                'nama_tag' => 'Politik',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_tag' => 'Kesehatan',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_tag' => 'Ekonomi',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_tag' => 'Hiburan',
+                'nama_tag' => 'Peristiwa',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -50,37 +50,47 @@ class TagSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'nama_tag' => 'Lifestyle',
+                'nama_tag' => 'Ekonomi',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_tag' => 'Travel',
+                'nama_tag' => 'Pemerintahan',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_tag' => 'Kriminal',
+                'nama_tag' => 'Gaya Hidup',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_tag' => 'Sosial',
+                'nama_tag' => 'English',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_tag' => 'Budaya',
+                'nama_tag' => 'Wisata',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_tag' => 'Agama',
+                'nama_tag' => 'Peristiwa Internasional',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_tag' => 'Otomotif',
+                'nama_tag' => 'Kesehatan',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_tag' => 'Hukum dan Kriminal',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_tag' => 'Entertainment',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -90,17 +100,12 @@ class TagSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'nama_tag' => 'Fashion',
+                'nama_tag' => 'Tekno',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_tag' => 'Properti',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_tag' => 'Parenting',
+                'nama_tag' => 'Otomotif',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

@@ -76,7 +76,7 @@ class BeritaController extends Controller
 
         if ($request->hasFile('foto_berita')) {
             $file = $request->file('foto_berita');
-            $filename = 'foto_' . str_replace(" ", "_", strtolower($request->judul_berita)) . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $filename = 'foto_' . time() . '.' . $file->getClientOriginalExtension();
             Storage::putFileAs('public/foto_berita', $file, $filename);
         }
 
@@ -155,7 +155,7 @@ class BeritaController extends Controller
             'foto_berita' => $request->hasFile('foto_berita') ? Storage::url('public/foto_berita/' . $filename) : $berita->foto_berita,
             'caption_foto' => $request->caption_foto,
             'artikel_berita' => $request->artikel_berita,
-            'status_berita' => auth()->user()->role == 'wartawan' ? 0 : $request->status_berita,
+            'status_berita' => auth()->user()->role == 'wartawan' ? $berita->status_berita : $request->status_berita,
         ]);
 
         TagBerita::where('id_berita', $id)->delete();
