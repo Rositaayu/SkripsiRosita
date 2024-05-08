@@ -80,7 +80,7 @@
                     <ul class="list-group">
                         @forelse ($komentar as $item)
                         <li class="list-group list-group-item-primary p-3 mb-3">
-                            Komentar {{ $loop->iteration }}
+                            Comment {{ $loop->iteration }}
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <strong>{{ $item->user->name }}</strong>

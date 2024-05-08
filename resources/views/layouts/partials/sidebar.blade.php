@@ -24,6 +24,7 @@
                 </div>
                 @endcan
 
+                @if (auth()->user()->role != 'admin')
                 <a class="nav-link" href="{{ route('berita') }}">
                     <div class="sb-nav-link-icon"><i class="far fa-file-alt"></i></div>
                     News List
@@ -32,6 +33,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                     Add News
                 </a>
+                @endif
                 <a class="nav-link" href="{{ route('profile.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-edit"></i></div>
                     Edit Profile
