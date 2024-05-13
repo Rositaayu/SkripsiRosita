@@ -15,12 +15,7 @@ class KategoriSeeder extends Seeder
     {
         $kategori = [
             [
-                'nama_kategori' => 'Berita Utama',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_kategori' => 'Berita Terkini',
+                'nama_kategori' => 'Headline',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -35,22 +30,7 @@ class KategoriSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'nama_kategori' => 'Berita Terlengkap',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_kategori' => 'Berita Terhangat',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_kategori' => 'Berita Terupdate',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_kategori' => 'Kopi Times',
+                'nama_kategori' => 'Berita Trending',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -1,5 +1,22 @@
 @extends('layouts.main')
 
+@push('styles')
+<style>
+    .bd-callout-info {
+        border-left-color: #5bc0de !important;
+    }
+
+    .bd-callout {
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid #e9ecef;
+        border-left-width: .25rem;
+        border-radius: .25rem;
+        background-color: rgba(91, 192, 222, 0.1);
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="container-fluid px-4">
     <h1 class="mt-4">Dashboard</h1>
@@ -56,8 +73,11 @@
                 </div>
                 <div class="card-body">
                     <h3>GRAFIK JUMLAH ARTIKEL BERITA BERDASARKAN KATEGORI BERITA</h3>
-                        <br>Berikut ini adalah statistik data poin yang telah dikelompokkan berdasarkan kategori berita dari artikel yang masuk pada sistem, disajikan dalam bentuk diagram pai.
+                        <br>
+                        <div class="bd-callout bd-callout-info">
+                        Berikut ini adalah statistik data poin yang telah dikelompokkan berdasarkan kategori berita dari artikel yang masuk pada sistem, disajikan dalam bentuk diagram pai.
                         Untuk menampilkan data kategori berita berdasarkan per hari, per minggu, per bulan, silahkan pilih filter yang dibutuhkan. Untuk menampilkan data detailnya, silahkan klik pada bagian grafik.
+                    </div>
                         
                     <!-- Dropdown untuk filter -->
                     <select class="select2 form-control" id="filter-kategori">
@@ -80,8 +100,11 @@
                 </div>
                 <div class="card-body">
                 <h3>GRAFIK JUMLAH ARTIKEL BERITA BERDASARKAN TAG BERITA</h3>
-                        <br>Berikut ini adalah statistik data poin yang telah dikelompokkan berdasarkan tag berita dari artikel yang masuk pada sistem, disajikan dalam bentuk diagram batang.
-                        Untuk menampilkan data tag berita berdasarkan per hari, per minggu, per bulan, silahkan pilih filter yang dibutuhkan. Untuk menampilkan data detailnya, silahkan klik pada bagian grafik.
+                        <br>
+                        <div class="bd-callout bd-callout-info">
+                            Berikut ini adalah statistik data poin yang telah dikelompokkan berdasarkan tag berita dari artikel yang masuk pada sistem, disajikan dalam bentuk diagram batang.
+                            Untuk menampilkan data tag berita berdasarkan per hari, per minggu, per bulan, silahkan pilih filter yang dibutuhkan. Untuk menampilkan data detailnya, silahkan klik pada bagian grafik.
+                        </div>
                     <!-- Dropdown untuk filter -->
                     <select class="select2 form-control" id="filter-tag">
                         <option value="bulan">Per Bulan</option>
@@ -103,8 +126,11 @@
                 </div>
                 <div class="card-body">
                 <h3>GRAFIK DENGAN JUMLAH ARTIKEL TERBANYAK BERDASARKAN DATA ARTIKEL WARTAWAN</h3>
-                        <br>Berikut ini adalah statistik data poin yang telah dikelompokkan berdasarkan artikel terbanyak pada data wartawan, disajikan dalam bentuk diagram batang.
-                        Untuk menampilkan data jumlah artikel berita terbanyak per hari, per minggu, per bulan, silahkan pilih filter yang dibutuhkan. Untuk menampilkan data detailnya, silahkan klik pada bagian grafik.
+                        <br>
+                        <div class="bd-callout bd-callout-info">
+                            Berikut ini adalah statistik data poin yang telah dikelompokkan berdasarkan artikel terbanyak pada data wartawan, disajikan dalam bentuk diagram batang.
+                            Untuk menampilkan data jumlah artikel berita terbanyak per hari, per minggu, per bulan, silahkan pilih filter yang dibutuhkan. Untuk menampilkan data detailnya, silahkan klik pada bagian grafik.
+                        </div>
                     <!-- Dropdown untuk filter -->
                     <select class="select2 form-control" id="filter-wartawan">
                         <option value="bulan">Per Bulan</option>

@@ -35,18 +35,6 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>No.</th>
-                            <th>Kategori</th>
-                            <th>Judul</th>
-                            <th>Penulis</th>
-                            <th>Editor</th>
-                            <th>Tanggal</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                     </tbody>
                 </table>
@@ -145,7 +133,7 @@
                     @can('wartawan')
                     + `<button type="button" class="btn btn-info btn-show btn-sm"><i class="fas fa-eye text-white"></i></button>
                     ${row.status_berita == 1 ? `<button type="button" class="btn btn-warning btn-edit btn-sm"><i class="fas fa-edit"></i></button>` : ''}
-                    ${row.komentar.length != 0 ? `<button type="button" class="btn btn-secondary btn-comment btn-sm"><i class="fas fa-comments"></i></button>` : ''}
+                    ${row.komentar.length != 0 && row.status_berita == 1 ? `<button type="button" class="btn btn-secondary btn-comment btn-sm"><i class="fas fa-comments"></i></button>` : ''}
                     `;
                     @endcan
                 }

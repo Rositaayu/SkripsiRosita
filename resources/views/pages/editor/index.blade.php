@@ -35,17 +35,6 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>No.</th>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>Alamat</th>
-                            <th>No. HP</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                     </tbody>
                 </table>

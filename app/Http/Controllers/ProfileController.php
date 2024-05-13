@@ -26,7 +26,7 @@ class ProfileController extends Controller
         ]);
 
         if ($request->email != $user->email) {
-            $validator->sometimes('email', 'unique:users,email', function ($input) use ($user) {
+            $validator->sometimes('email', 'unique:user,email', function ($input) use ($user) {
                 return $input->email != $user->email;
             });
         }

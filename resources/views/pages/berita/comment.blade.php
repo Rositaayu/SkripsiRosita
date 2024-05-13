@@ -103,8 +103,8 @@
 
                 <div class="mb-3">
                     <label for="comment" class="form-label">Comment</label>
-                    <input type="text" class="form-control @error('comment') is-invalid @enderror" id="comment"
-                        name="comment" value="{{ old('comment') }}">
+                    <textarea class="form-control @error('comment') is-invalid @enderror" id="comment" name="comment"
+                        rows="5">{{ old('comment') }}</textarea>
                     @error('comment')
                     <div class="invalid-feedback">
                         {{ $message }}
