@@ -81,9 +81,19 @@
                         
                     <!-- Dropdown untuk filter -->
                     <select class="select2 form-control" id="filter-kategori">
-                        <option value="bulan">Per Bulan</option>
-                        <option value="hari">Per Hari</option>
-                        <option value="minggu">Per Minggu</option>
+                    <option selected value="">Semua</option>
+                        <option value="01">Januari</option>
+                        <option value="02">Februari</option>
+                        <option value="03">Maret</option>
+                        <option value="04">April</option>
+                        <option value="05">Mei</option>
+                        <option value="06">Juni</option>
+                        <option value="07">Juli</option>
+                        <option value="08">Agustus</option>
+                        <option value="09">September</option>
+                        <option value="10">Oktober</option>
+                        <option value="11">November</option>
+                        <option value="12">Desember</option>
                     </select>
                     <hr>
                     <canvas id="kategori" width="100%" height="40"></canvas>
@@ -107,9 +117,19 @@
                         </div>
                     <!-- Dropdown untuk filter -->
                     <select class="select2 form-control" id="filter-tag">
-                        <option value="bulan">Per Bulan</option>
-                        <option value="hari">Per Hari</option>
-                        <option value="minggu">Per Minggu</option>
+                    <option selected value="">Semua</option>
+                        <option value="01">Januari</option>
+                        <option value="02">Februari</option>
+                        <option value="03">Maret</option>
+                        <option value="04">April</option>
+                        <option value="05">Mei</option>
+                        <option value="06">Juni</option>
+                        <option value="07">Juli</option>
+                        <option value="08">Agustus</option>
+                        <option value="09">September</option>
+                        <option value="10">Oktober</option>
+                        <option value="11">November</option>
+                        <option value="12">Desember</option>
                     </select>
                     <hr>
                     <canvas id="tag" width="100%" height="40"></canvas>
@@ -133,9 +153,19 @@
                         </div>
                     <!-- Dropdown untuk filter -->
                     <select class="select2 form-control" id="filter-wartawan">
-                        <option value="bulan">Per Bulan</option>
-                        <option value="hari">Per Hari</option>
-                        <option value="minggu">Per Minggu</option>
+                    <option selected value="">Semua</option>
+                        <option value="01">Januari</option>
+                        <option value="02">Februari</option>
+                        <option value="03">Maret</option>
+                        <option value="04">April</option>
+                        <option value="05">Mei</option>
+                        <option value="06">Juni</option>
+                        <option value="07">Juli</option>
+                        <option value="08">Agustus</option>
+                        <option value="09">September</option>
+                        <option value="10">Oktober</option>
+                        <option value="11">November</option>
+                        <option value="12">Desember</option>
                     </select>
                     <hr>
                     <canvas id="wartawan" width="100%" height="40"></canvas>
@@ -161,18 +191,24 @@
             let url;
 
             // Tentukan URL berdasarkan nilai filter
-            if (filterValue === 'bulan') {
-                url = "{{ route('filter.month.kategori') }}";
-            } else if (filterValue === 'hari') {
-                url = "{{ route('filter.day.kategori') }}";
-            } else if (filterValue === 'minggu') {
-                url = "{{ route('filter.week.kategori') }}";
-            }
+            // if (filterValue === 'bulan') {
+            //     url = "{{ route('filter.month.kategori') }}";
+            // } else if (filterValue === 'hari') {
+            //     url = "{{ route('filter.day.kategori') }}";
+            // } else if (filterValue === 'minggu') {
+            //     url = "{{ route('filter.week.kategori') }}";
+            // }
+
+            url = "{{ route('filter.month.kategori') }}";
 
             // Lakukan request AJAX
             $.ajax({
                 url: url,
-                method: "GET",
+                method: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    month: filterValue
+                },
                 success: function(data) {
                     // Buat chart baru dengan data yang diterima
                     const newData = {
@@ -182,28 +218,18 @@
                             data: data,
                             borderWidth: 1,
                             backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(250, 150, 64, 0.2)',
-                                'rgba(250, 90, 132, 0.2)',
-                                'rgba(50, 160, 235, 0.2)',
-                                'rgba(250, 200, 86, 0.2)',
-                                'rgba(70, 190, 192, 0.2)'
+                                'rgba(0, 35, 121)',
+                                'rgba(255, 95, 0)',
+                                'rgba(56, 122, 223)',
+                                'rgba(135, 169, 34)'
+                                
                             ],
                             borderColor: [
-                                'rgb(255, 99, 132)',
-                                'rgb(54, 162, 235)',
-                                'rgb(255, 206, 86)',
-                                'rgb(75, 192, 192)',
-                                'rgb(153, 102, 255)',
-                                'rgb(255, 159, 64)',
-                                'rgb(250, 90, 132)',
-                                'rgb(50, 160, 235)',
-                                'rgb(250, 200, 86)',
-                                'rgb(70, 190, 192)'
+                                'rgb(242, 245, 250)',
+                                'rgb(242, 245, 250)',
+                                'rgb(242, 245, 250)',
+                                'rgb(242, 245, 250)'
+                                
                             ],
                         }]
                     };
@@ -242,18 +268,24 @@
             let url;
 
             // Tentukan URL berdasarkan nilai filter
-            if (filterValue === 'bulan') {
-                url = "{{ route('filter.month.tag') }}";
-            } else if (filterValue === 'hari') {
-                url = "{{ route('filter.day.tag') }}";
-            } else if (filterValue === 'minggu') {
-                url = "{{ route('filter.week.tag') }}";
-            }
+            // if (filterValue === 'bulan') {
+            //     url = "{{ route('filter.month.tag') }}";
+            // } else if (filterValue === 'hari') {
+            //     url = "{{ route('filter.day.tag') }}";
+            // } else if (filterValue === 'minggu') {
+            //     url = "{{ route('filter.week.tag') }}";
+            // }
+
+            url = "{{ route('filter.month.tag') }}";
 
             // Lakukan request AJAX
             $.ajax({
                 url: url,
-                method: "GET",
+                method: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    month: filterValue
+                },
                 success: function(data) {
                     // Buat chart baru dengan data yang diterima
                     const newData = {
@@ -263,44 +295,45 @@
                                 data: data,
                                 borderWidth: 1,
                                 backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
-                                    'rgba(250, 150, 64, 0.2)',
-                                    'rgba(250, 90, 132, 0.2)',
-                                    'rgba(50, 160, 235, 0.2)',
-                                    'rgba(250, 200, 86, 0.2)',
-                                    'rgba(70, 190, 192, 0.2)',
-                                    'rgba(255, 99, 130, 0.2)',
-                                    'rgba(54, 162, 230, 0.2)',
-                                    'rgba(255, 206, 80, 0.2)',
-                                    'rgba(75, 192, 190, 0.2)',
-                                    'rgba(153, 102, 250, 0.2)',
-                                    'rgba(250, 150, 60, 0.2)',
-                                    'rgba(250, 90, 130, 0.2)',
-                                    'rgba(50, 160, 230, 0.2)'
+                                    'rgba(0, 35, 121)',
+                                    'rgba(255, 95, 0)',
+                                    'rgba(255, 159, 102)',
+                                    'rgba(169, 29, 58)',
+                                    'rgba(199, 54, 89)',
+                                    'rgba(100, 13, 107)',
+                                    'rgba(181, 27, 117)',
+                                    'rgba(196, 12, 12)',
+                                    'rgba(103, 63, 105)',
+                                    'rgba(215, 75, 118)',
+                                    'rgba(251, 109, 72)',
+                                    'rgba(144, 210, 109)',
+                                    'rgba(44, 120, 101)',
+                                    'rgba(67, 10, 93)',
+                                    'rgba(95, 55, 75)',
+                                    'rgba(140, 106, 93)',
+                                    'rgba(0, 127, 115)',
+                                    'rgba(160, 21, 62)',
+                                    'rgb(252, 220, 42)'
                                 ],
                                 borderColor: [
-                                    'rgb(255, 99, 132)',
-                                    'rgb(54, 162, 235)',
-                                    'rgb(255, 206, 86)',
-                                    'rgb(75, 192, 192)',
-                                    'rgb(153, 102, 255)',
-                                    'rgb(255, 159, 64)',
-                                    'rgb(250, 90, 132)',
-                                    'rgb(50, 160, 235)',
-                                    'rgb(250, 200, 86)',
-                                    'rgb(70, 190, 192)',
-                                    'rgb(255, 99, 130)',
-                                    'rgb(54, 162, 230)',
-                                    'rgb(255, 206, 80)',
-                                    'rgb(75, 192, 190)',
-                                    'rgb(153, 102, 250)',
-                                    'rgb(250, 150, 60)',
-                                    'rgb(250, 90, 130)',
-                                    'rgb(50, 160, 230)'
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)',
+                                    'rgb(242, 245, 250)'
                                 ],
                             }
                         ]
@@ -317,9 +350,11 @@
                         data: newData,
                         options: {
                             scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
                             },
                             legend: {
                                 display: false
@@ -350,28 +385,44 @@
             let url;
 
             // Tentukan URL berdasarkan nilai filter
-            if (filterValue === 'bulan') {
-                url = "{{ route('filter.month.wartawan') }}";
-            } else if (filterValue === 'hari') {
-                url = "{{ route('filter.day.wartawan') }}";
-            } else if (filterValue === 'minggu') {
-                url = "{{ route('filter.week.wartawan') }}";
-            }
+            // if (filterValue === 'bulan') {
+            //     url = "{{ route('filter.month.wartawan') }}";
+            // } else if (filterValue === 'hari') {
+            //     url = "{{ route('filter.day.wartawan') }}";
+            // } else if (filterValue === 'minggu') {
+            //     url = "{{ route('filter.week.wartawan') }}";
+            // }
+
+            url = "{{ route('filter.month.wartawan') }}";
 
             // Lakukan request AJAX
             $.ajax({
                 url: url,
-                method: "GET",
+                method: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    month: filterValue
+                },
                 success: function(data) {
+                    let dataBackgroundColor = [];
+                    let dataBorderColor = [];
+
+                    if (data.jumlahBerita) {
+                        for (let i = 0; i < data.jumlahBerita.length; i++) {
+                            dataBackgroundColor.push('rgba(199, 54, 89)');
+                            dataBorderColor.push('rgb(242, 245, 250)');
+                        }
+                    }
+
                     // Buat chart baru dengan data yang diterima
                     const newData = {
-                        labels: @json($wartawan),
+                        labels: data.namaWartawan,
                         datasets: [
                             {
-                                data: data,
+                                data: data.jumlahBerita,
                                 borderWidth: 1,
-                                backgroundColor: 'rgba(235, 64, 52, 0.2 )',
-                                borderColor: 'rgb(235, 64, 52)',
+                                backgroundColor: dataBackgroundColor,
+                                borderColor: dataBorderColor,
                             }
                         ]
                     };
@@ -387,9 +438,11 @@
                         data: newData,
                         options: {
                             scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
                             },
                             legend: {
                                 display: false
@@ -409,7 +462,7 @@
 
         // Memperbarui chart saat halaman dimuat
         updateChartWartawan();
-    });
+    });
 
 </script>
 @endpush

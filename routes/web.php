@@ -28,17 +28,17 @@ Route::get('/', [DashboardController::class, 'index'])->name('home')->middleware
 
 // Filter Kategori
 Route::get('/day-filter-kategori', [DashboardController::class, 'dayFilterKategori'])->name('filter.day.kategori')->middleware('auth');
-Route::get('/month-filter-kategori', [DashboardController::class, 'monthFilterKategori'])->name('filter.month.kategori')->middleware('auth');
+Route::post('/month-filter-kategori', [DashboardController::class, 'monthFilterKategori'])->name('filter.month.kategori')->middleware('auth');
 Route::get('/week-filter-kategori', [DashboardController::class, 'weekFilterKategori'])->name('filter.week.kategori')->middleware('auth');
 
 // Filter Tag
 Route::get('/day-filter-tag', [DashboardController::class, 'dayFilterTag'])->name('filter.day.tag')->middleware('auth');
-Route::get('/month-filter-tag', [DashboardController::class, 'monthFilterTag'])->name('filter.month.tag')->middleware('auth');
+Route::post('/month-filter-tag', [DashboardController::class, 'monthFilterTag'])->name('filter.month.tag')->middleware('auth');
 Route::get('/week-filter-tag', [DashboardController::class, 'weekFilterTag'])->name('filter.week.tag')->middleware('auth');
 
 // Filter Wartawan
 Route::get('/day-filter-wartawan', [DashboardController::class, 'dayFilterWartawan'])->name('filter.day.wartawan')->middleware('auth');
-Route::get('/month-filter-wartawan', [DashboardController::class, 'monthFilterWartawan'])->name('filter.month.wartawan')->middleware('auth');
+Route::post('/month-filter-wartawan', [DashboardController::class, 'monthFilterWartawan'])->name('filter.month.wartawan')->middleware('auth');
 Route::get('/week-filter-wartawan', [DashboardController::class, 'weekFilterWartawan'])->name('filter.week.wartawan')->middleware('auth');
 
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');

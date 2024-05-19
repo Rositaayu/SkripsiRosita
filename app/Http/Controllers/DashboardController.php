@@ -7,6 +7,7 @@ use App\Models\Berita;
 use Illuminate\Http\Request;
 use App\Models\KategoriBerita;
 use App\Models\Wartawan;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -113,10 +114,14 @@ class DashboardController extends Controller
 
             // Filter data berdasarkan bulan dan tahun saat ini
             $monthData = Berita::with('user.wartawan.editor.user')->selectRaw('kategori_berita.nama_kategori, COUNT(*) as total')
-                ->join('kategori_berita', 'berita.id_kategori_berita', '=', 'kategori_berita.id_kategori_berita')
-                ->whereMonth('berita.created_at', $currentMonth) // Hanya ambil data untuk bulan ini
-                ->whereYear('berita.created_at', $currentYear) // Hanya ambil data untuk tahun ini
-                ->groupBy('kategori_berita.nama_kategori');
+                ->join('kategori_berita', 'berita.id_kategori_berita', '=', 'kategori_berita.id_kategori_berita');
+
+            if (!empty($request->input('month'))) {
+                $monthData = $monthData->whereMonth('berita.created_at', $request->input('month'))
+                    ->whereYear('berita.created_at', $currentYear);
+            }
+
+            $monthData = $monthData->groupBy('kategori_berita.nama_kategori');
 
             if (Auth::user()->role == 'wartawan') {
                 $monthData->where('berita.id_user', Auth::user()->id_user);
@@ -151,9 +156,8 @@ class DashboardController extends Controller
     public function weekFilterKategori(Request $request)
     {
         if ($request->ajax()) {
-            // Ambil tanggal awal dan akhir minggu ini
-            $startOfWeek = date('Y-m-d');
-            $endOfWeek = date('Y-m-d', strtotime('-7 days'));
+            // Ambil 7 hari sebelum hari ini
+            $sevenDaysAgo = Carbon::now()->subDays(7);
 
             // Ambil daftar kategori berita yang unik
             $categories = KategoriBerita::distinct()->pluck('nama_kategori');
@@ -161,7 +165,7 @@ class DashboardController extends Controller
             // Filter data berdasarkan rentang tanggal minggu ini
             $weekData = Berita::with('user.wartawan.editor.user')->selectRaw('kategori_berita.nama_kategori, COUNT(*) as total')
                 ->join('kategori_berita', 'berita.id_kategori_berita', '=', 'kategori_berita.id_kategori_berita')
-                ->whereBetween('berita.created_at', [$startOfWeek, $endOfWeek]) // Hanya ambil data untuk minggu ini
+                ->where('berita.created_at', '>=', $sevenDaysAgo) // Hanya ambil data untuk minggu ini
                 ->groupBy('kategori_berita.nama_kategori');
 
             if (Auth::user()->role == 'wartawan') {
@@ -253,10 +257,14 @@ class DashboardController extends Controller
             // Filter data berdasarkan tanggal yang dipilih
             $monthData = Tag::with('tag_berita.berita.user.wartawan.editor.user')->selectRaw('tag.nama_tag, COUNT(*) as total')
                 ->join('tag_berita', 'tag.id_tag', '=', 'tag_berita.id_tag')
-                ->join('berita', 'tag_berita.id_berita', '=', 'berita.id_berita')
-                ->whereMonth('berita.created_at', $currentMonth) // Hanya ambil data untuk bulan ini
-                ->whereYear('berita.created_at', $currentYear) // Hanya ambil data untuk tahun ini
-                ->groupBy('tag.nama_tag');
+                ->join('berita', 'tag_berita.id_berita', '=', 'berita.id_berita');
+
+            if (!empty($request->input('month'))) {
+                $monthData = $monthData->whereMonth('berita.created_at', $request->input('month'))
+                    ->whereYear('berita.created_at', $currentYear);
+            }
+
+            $monthData = $monthData->groupBy('tag.nama_tag');
 
             if (Auth::user()->role == 'wartawan') {
                 $monthData->where('berita.id_user', Auth::user()->id_user);
@@ -291,9 +299,8 @@ class DashboardController extends Controller
     public function weekFilterTag(Request $request)
     {
         if ($request->ajax()) {
-            // Ambil tanggal awal dan akhir minggu ini
-            $startOfWeek = date('Y-m-d');
-            $endOfWeek = date('Y-m-d', strtotime('-7 days'));
+            // Ambil 7 hari sebelum hari ini
+            $sevenDaysAgo = Carbon::now()->subDays(7);
 
             // Ambil daftar kategori berita yang unik
             $tags = Tag::distinct()->pluck('nama_tag');
@@ -302,7 +309,7 @@ class DashboardController extends Controller
             $weekData = Tag::with('tag_berita.berita.user.wartawan.editor.user')->selectRaw('tag.nama_tag, COUNT(*) as total')
                 ->join('tag_berita', 'tag.id_tag', '=', 'tag_berita.id_tag')
                 ->join('berita', 'tag_berita.id_berita', '=', 'berita.id_berita')
-                ->whereBetween('berita.created_at', [$startOfWeek, $endOfWeek]) // Hanya ambil data untuk minggu ini
+                ->where('berita.created_at', '>=', $sevenDaysAgo) // Hanya ambil data untuk minggu ini
                 ->groupBy('tag.nama_tag');
 
             if (Auth::user()->role == 'wartawan') {
@@ -353,13 +360,18 @@ class DashboardController extends Controller
 
             // Inisialisasi array untuk menyimpan jumlah berita per wartawan
             $jumlahBerita = [];
+            $namaWartawan = [];
 
             // Loop melalui hasil query dan memasukkan jumlah berita ke dalam array
             foreach ($topWartawan as $wartawan) {
                 $jumlahBerita[] = $wartawan->total_berita;
+                $namaWartawan[] = $wartawan->name;
             }
 
-            return response()->json($jumlahBerita);
+            return response()->json([
+                'jumlahBerita' => $jumlahBerita,
+                'namaWartawan' => $namaWartawan
+            ]);
         }
     }
     public function monthFilterWartawan(Request $request)
@@ -372,38 +384,46 @@ class DashboardController extends Controller
             // Query untuk mengambil 5 wartawan teratas
             $topWartawan = Wartawan::select('user.name', DB::raw('COUNT(berita.id_berita) AS total_berita'))
                 ->join('user', 'wartawan.id_user', '=', 'user.id_user')
-                ->join('berita', 'wartawan.id_user', '=', 'berita.id_user')
-                ->whereMonth('berita.created_at', $currentMonth) // Hanya ambil data untuk bulan ini
-                ->whereYear('berita.created_at', $currentYear) // Hanya ambil data untuk tahun ini
-                ->groupBy('user.id_user')
+                ->join('berita', 'wartawan.id_user', '=', 'berita.id_user');
+
+            if (!empty($request->input('month'))) {
+                $topWartawan = $topWartawan->whereMonth('berita.created_at', $request->input('month'))
+                    ->whereYear('berita.created_at', $currentYear);
+            }
+
+            $topWartawan = $topWartawan->groupBy('user.id_user')
                 ->orderByDesc('total_berita')
                 ->limit(5)
                 ->get();
 
             // Inisialisasi array untuk menyimpan jumlah berita per wartawan
             $jumlahBerita = [];
+            $namaWartawan = [];
 
             // Loop melalui hasil query dan memasukkan jumlah berita ke dalam array
             foreach ($topWartawan as $wartawan) {
                 $jumlahBerita[] = $wartawan->total_berita;
+                $namaWartawan[] = $wartawan->name;
             }
 
-            return response()->json($jumlahBerita);
+            return response()->json([
+                'jumlahBerita' => $jumlahBerita,
+                'namaWartawan' => $namaWartawan
+            ]);
         }
     }
 
     public function weekFilterWartawan(Request $request)
     {
         if ($request->ajax()) {
-            // Ambil tanggal awal dan akhir minggu ini
-            $startOfWeek = date('Y-m-d');
-            $endOfWeek = date('Y-m-d', strtotime('-7 days'));
+            // Ambil 7 hari sebelum hari ini
+            $sevenDaysAgo = Carbon::now()->subDays(7);
 
             // Query untuk mengambil 5 wartawan teratas
             $topWartawan = Wartawan::select('user.name', DB::raw('COUNT(berita.id_berita) AS total_berita'))
                 ->join('user', 'wartawan.id_user', '=', 'user.id_user')
                 ->join('berita', 'wartawan.id_user', '=', 'berita.id_user')
-                ->whereBetween('berita.created_at', [$startOfWeek, $endOfWeek]) // Hanya ambil data untuk minggu ini
+                ->where('berita.created_at', '>=', $sevenDaysAgo) // Hanya ambil data untuk minggu ini
                 ->groupBy('user.id_user')
                 ->orderByDesc('total_berita')
                 ->limit(5)
@@ -411,13 +431,18 @@ class DashboardController extends Controller
 
             // Inisialisasi array untuk menyimpan jumlah berita per wartawan
             $jumlahBerita = [];
+            $namaWartawan = [];
 
             // Loop melalui hasil query dan memasukkan jumlah berita ke dalam array
             foreach ($topWartawan as $wartawan) {
                 $jumlahBerita[] = $wartawan->total_berita;
+                $namaWartawan[] = $wartawan->name;
             }
 
-            return response()->json($jumlahBerita);
+            return response()->json([
+                'jumlahBerita' => $jumlahBerita,
+                'namaWartawan' => $namaWartawan
+            ]);
         }
     }
 }
